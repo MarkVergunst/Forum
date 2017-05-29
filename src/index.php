@@ -14,12 +14,32 @@
 
 <aside>
     <div id="login" >
+
         <form>
             <br />
-            Gebruikersnaam: <input type="text"  />          <br />
-            Wachtwoord: <input id="pass" type="password" />           <br />
+            Gebruikersnaam: <input type="text" name="gebruikersnaam"  />          <br />
+            Wachtwoord: <input id="pass" type="password" name="wachtwoord" />           <br />
             <input id="inloggen" type="submit" value="inloggen" />
+
         </form>
+        <?php
+        include "database.php";
+        $database = new database();
+        session_start();
+
+        if(isset($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])){
+            $user = $_POST['gebruikersnaam'];
+            $wachtwoord = md5($_POST['wachtwoord']);
+            $result = $database->execute("Select * FROM users WHERE login_name = '$user' AND wachtwoord = '$wachtwoord'");
+            if(count($result)== 1) {
+                $_SESSION["id"] = $result[0]['id'];
+                header("Location: login.php");
+
+            }else{
+                echo "<br />login failed";
+            }
+        }
+        ?>
     </div>
 </aside>
 <div id="logo">
