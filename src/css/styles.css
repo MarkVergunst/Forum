@@ -1,0 +1,82 @@
+html{
+    margin: 0;
+    background-color: #A4A4A4;
+}
+body{
+    margin: 0;
+}
+header{
+    background-color: #D40000;
+    height: 70px;
+    width: 1902px;
+    z-index: 5;
+}
+aside{
+    background-color: #848484;
+    height: 100px;
+    width: 1902px;
+}
+form{
+    border-left: double thick black;
+    height: 100px;
+    padding-left: 20px;
+    display: block;
+}
+main{
+background-color: #BDBDBD;
+width: 1400px;
+height: 1000px;
+margin-left: 260px;
+}
+#login{
+    height: 100px;
+    width: 400px;
+    margin-left: 1500px;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 10px;
+    overflow: hidden;
+
+}
+li {
+    float: left;
+    position: relative;
+    left:260px;
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+li a:hover {
+    background-color: black;
+}
+#logo h1{
+    background-color: #848484;
+    width: 300px;
+    position: absolute;
+    top: 60px;
+    left: 265px;
+    font-size: 3em;
+}
+#pass{
+    margin-left: 24px;
+}
+#inloggen{
+    margin-top: 10px;
+    margin-left: 223px;
+}
+title .head{
+    z-index: 5;
+    position: relative;
+    top:50px;
+
+    height: 50px;
+    width: 800px;
+    border: 1px solid black;
+}
