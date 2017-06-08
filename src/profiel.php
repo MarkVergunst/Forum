@@ -5,7 +5,6 @@
     <link href="css/styles.css" rel="stylesheet">
     <title>Ducati Forum</title>
     <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript" src="ajax.js"></script>
 </head>
 <body>
 <header>
@@ -35,23 +34,15 @@
             $result = $database->execute("Select * FROM users WHERE login_name = '$user' AND wachtwoord = '$wachtwoord'");
             if(count($result)== 1) {
                 $_SESSION["id"] = $result[0]['id'];
-
-                echo "<button id='profiel' onclick='profielpagina();'>Profiel pagina</button>";
                 $user = database::user($_SESSION['id']);
+                echo "<pre>";
+                print_r($user);
+                echo "</pre>";
 
                 echo "<br />login Succes";
-                header('Location: '. $_SERVER['HTTP_REFERER']);
-
             }else{
                 echo "<br />login failed";
             }
-        }
-
-        if (isset($_SESSION['id'])) {
-            $user = database::user($_SESSION['id']);
-            echo "<pre>";
-            print_r($user);
-            echo "</pre>";
         }
         ?>
     </div>
@@ -62,13 +53,12 @@
     </h1>
 </div>
 <main>
-<title class="head">
+    <title class="head">
 
-</title>
-    <section class="Insert-container">
+    </title>
+    <section class="content">
 
     </section>
 </main>
 </body>
-
 </html>

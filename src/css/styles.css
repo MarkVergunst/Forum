@@ -80,3 +80,15 @@ title .head{
     width: 800px;
     border: 1px solid black;
 }
+button #profiel{
+    margin-top: 150px;
+    z-index: 5;
+}
+#logout form{
+     border-left: none;!important;
+
+ }
+#profiel form{
+    border-left: none;!important;
+
+}
