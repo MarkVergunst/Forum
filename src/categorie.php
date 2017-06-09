@@ -28,7 +28,7 @@
             <input type="submit" value="logout" name="logout">
         </form>
 
-            <?php
+        <?php
         }
         // dit stukje code zorgt voor de connectie met de database
         include "database.php";
@@ -68,7 +68,6 @@
             echo "</pre>";
         }
         ?>
-    </div>
 </aside>
 <div id="logo">
     <h1>
@@ -76,16 +75,16 @@
     </h1>
 </div>
 <main>
-    <!-- dit zorgt voor het ophalen van de juiste gegevens.-->
     <?php foreach (database::execute("Select * FROM categorie") as $result){ ?>
         <div onclick="load_Topic(<?php echo $result['id'] ?>);" class="header">
-            <p>  <?php echo $result['titel'];?></p>
+          <p>  <?php echo $result['titel'];?></p>
         </div>
-        <article onclick="load_Topic();" class="content">
-            <p> <?php echo $result['description']; ?></p>
+        <article onclick="load_Topic(<?php echo $result['id'] ?>);" class="content">
+           <p> <?php echo $result['description']; ?></p>
         </article>
     <?php } ?>
 </main>
-</body>
 
+</body>
 </html>
+<script type="text/javascript" src="script.js"></script>

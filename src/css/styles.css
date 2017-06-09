@@ -69,7 +69,7 @@ li a:hover {
 }
 #inloggen{
     margin-top: 10px;
-    margin-left: 223px;
+    margin-left: 114px;
 }
 title .head{
     z-index: 5;
@@ -86,9 +86,34 @@ button #profiel{
 }
 #logout form{
      border-left: none;!important;
-
  }
 #profiel form{
     border-left: none;!important;
-
+}
+main{
+    padding-top: 50px;
+}
+.header{
+    background-color: white;
+    width:  900px;
+    height: 50px;
+    margin-left: 250px;
+    margin-top: 50px;
+    border: 1px solid grey;
+}
+.header p{
+    padding-left: 50px;
+}
+article  {
+    background-color: white;
+    width:  900px;
+    height: 150px;
+    margin-left: 250px;
+    border: 1px solid grey;
+}
+article  p  {
+    padding-left: 50px;
+}
+#datum{
+    padding-left: 20px;
 }

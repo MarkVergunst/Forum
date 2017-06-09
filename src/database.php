@@ -34,6 +34,7 @@ class database
         $select->execute();
         return $select->fetchALL();
     }
+
     public static function execute_without_fetch($query){
         $select = self::$conn->prepare($query);
         $select->execute();
