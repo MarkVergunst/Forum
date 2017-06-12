@@ -21,7 +21,6 @@ class database
             self::$conn = new PDO("mysql:host=$dbHost;dbname=$database",$user, $password);
             // set the PDO error mode to exception
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connected successfully<br />"; // will be removed at release
         }
         catch(PDOException $e)
         {

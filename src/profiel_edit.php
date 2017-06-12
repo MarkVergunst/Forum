@@ -26,9 +26,18 @@
             Gebruikersnaam: <input type="text" name="gebruikersnaam"  />          <br />
             Wachtwoord: <input id="pass" type="password" name="wachtwoord" />           <br />
             <input id="inloggen" type="submit" value="inloggen" />
+            <!-- hier word bekeken of er al een sessie bestaat zo niet laat hij de loguit knop niet zien. -->
+            <?php if(isset($_SESSION['id'])) { ?>
+            <input type="submit" value="logout" name="logout">
 
         </form>
         <?php
+        }
+        // dit stukje code zorgt voor het uitloggen
+        if(isset($_POST['logout'])){
+            unset($_SESSION['id']);
+            header('Location: '. $_SERVER['HTTP_REFERER']);
+        }
             if(isset($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])){
             $user = $_POST['gebruikersnaam'];
             $wachtwoord = md5($_POST['wachtwoord']);
@@ -45,13 +54,6 @@
             }else{
                 echo "<br />login failed";
             }
-        }
-
-        if (isset($_SESSION['id'])) {
-            $user = database::user($_SESSION['id']);
-            echo "<pre>";
-            print_r($user);
-            echo "</pre>";
         }
         ?>
     </div>

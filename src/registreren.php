@@ -78,13 +78,6 @@
             echo "<br />login failed";
         }
     }
-    // dit wordt verwijderd bij release
-    if (isset($_SESSION['id'])) {
-        $user = database::user($_SESSION['id']);
-        echo "<pre>";
-        print_r($user);
-        echo "</pre>";
-    }
     // dit zorgt ervoor dat je kant registreren en dat word dan in de database gezet
     if(isset($_POST['gebruikersnaam'])&&!empty($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])&&!empty($_POST['wachtwoord']) && isset($_POST['email'])&&!empty($_POST['email']) && isset($_POST['voornaam']) &&!empty($_POST['voornaam']) && isset($_POST['achternaam'])&&!empty($_POST['achternaam'])){
     if($_POST['wachtwoord'] === $_POST['confirmwachtwoord']) {

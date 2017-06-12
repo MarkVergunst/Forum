@@ -61,13 +61,6 @@
                 echo "<br />login failed";
             }
         }
-        // dit wordt verwijderd bij release
-        if (isset($_SESSION['id'])) {
-            $user = database::user($_SESSION['id']);
-            echo "<pre>";
-            print_r($user);
-            echo "</pre>";
-        }
         ?>
     </div>
 </aside>

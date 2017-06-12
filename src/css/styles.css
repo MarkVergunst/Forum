@@ -25,7 +25,7 @@ form{
 main{
 background-color: #BDBDBD;
 width: 1400px;
-height: 1000px;
+height: 1200px;
 margin-left: 260px;
 }
 main .koptekst{
@@ -145,5 +145,8 @@ section button{
 }
 #reactie{
     margin-left: 230px;
+    border-left: none;
+}
+#categorie_aanmaken{
     border-left: none;
 }

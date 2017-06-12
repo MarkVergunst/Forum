@@ -63,13 +63,6 @@
                 echo "<br />login failed";
             }
         }
-        // dit wordt verwijderd bij release
-        if (isset($_SESSION['id'])) {
-            $user = database::user($_SESSION['id']);
-            echo "<pre>";
-            print_r($user);
-            echo "</pre>";
-        }
         ?>
     </div>
 </aside>
@@ -81,7 +74,18 @@
 <main>
     <h1 class="koptekst"> Categorie aanmaken</h1>
     <p class="description"> Volg dit formulier om een Categorie aan te maken.</p>
-
+<form method="post" id="categorie_aanmaken">
+    <p>Titel:</p><input type="text" name="titel" /> <br />
+    <p>korte samenvatting:</p><input type="text" name="description" /> <br />
+    <input type="submit" value="Bevestigen" name="Bevestigen"/>
+</form>
+    <?php
+    if(isset($_POST['titel']) && isset($_POST['description'])){
+        $titel = $_POST['titel'];
+        $description = $_POST['description'];
+        database::execute_without_fetch("INSERT INTO categorie (titel, description) VALUES ('$titel','$description')");
+    }
+    ?>
 
 </main>
 </body>
