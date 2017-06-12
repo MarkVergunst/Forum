@@ -62,29 +62,41 @@
     </h1>
 </div>
 <main>
-        <h1 class="koptekst"> Profiel pagina</h1>
+    <h1 class="koptekst"> Profiel pagina</h1>
 
-        <section class="content">
-<?php
-//        $result = database::execute("SELECT * FROM users WHERE id = '{$_SESSION['id']}'");
-//        echo "<pre>";
-//        print_r($result);
-//        echo "</pre>";
-//        ?>
-            <?php
-        foreach (database::execute("SELECT * FROM users WHERE id = '{$_SESSION['id']}'") as $result){
-?>
-            <p> Gebruikersnaam: <?php echo $result['login_name']; ?></p>
-            <p> E-mail: <?php echo $result['email']; ?></p>
-            <p> Voornaam: <?php echo $result['Voornaam']; ?></p>
-            <p> Achternaam: <?php echo $result['Achternaam']; ?></p>
-            <p> Geboortedatum: <?php echo $result['geboortedatum']; ?></p>
-            <?php
+    <section class="content">
+
+        <?php
+        $result = $database->execute("SELECT * FROM users WHERE id = '{$_SESSION['id']}'");
+            ?>
+            <form id="password_change" method="post">
+                <p> Oud wachtwoord: </p><input type="password" name="old_password"/>
+                <p> Nieuw wachtwoord </p><input type="password" name="new_password"/>
+                <p> Nogmaals wachtwoord: </p><input type="password" name="again_password"/>
+                <br />
+                <br />
+                <input type="submit" value="Bevestigen" name="Bevestigen" />
+            </form>
+        <?php
+        if(isset($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['again_password'])){
+            $old_pass = md5($_POST['old_password']);
+            $db_pass = $result['wachtwoord'];
+            $new_pass = $_POST['new_password'];
+            $again_pass = $_POST['again_password'];
+            if ($old_pass == $db_pass){
+                 if ($new_pass == $again_pass) {
+                     database::execute_without_fetch("UPDATE users SET wachtwoord = '$new_pass' WHERE id =('{$_SESSION['id']}'");
+                     echo "uw wachtwoord is veranderd";
                     }
-                ?>
-            <button onclick="change_Password();">Change Password</button>
-        </section>
+                    echo "uw wachtwoord komt niet overheen";
+            }
+            echo "uw oude wachtwoord klopt niet";
+        }else {
+            echo "<br /><br /><br /><br /><br /><br /><br /><br /><br />u moet alle velden invullen";
+        }
+        ?>
+    </section>
 </main>
 </body>
-<script type="text/javascript" src="script.js"></script>
+
 </html>

@@ -7,3 +7,6 @@ function load_Topic(id) {
 function load_Post(id) {
     window.location = "post.php?id="+id;
 }
+function change_Password() {
+    window.location = "profiel_edit.php";
+}

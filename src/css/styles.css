@@ -123,3 +123,20 @@ article  p  {
 #datum{
     padding-left: 20px;
 }
+section {
+    width:  900px;
+    height: 350px;
+    margin-left: 250px;
+    border: 1px solid grey;
+}
+section p{
+    padding-left: 25px;
+}
+section button{
+    margin-top: 122px;
+    margin-left: 780px;
+    margin-right: 6px;
+}
+#password_change {
+    border-left: none;
+}
