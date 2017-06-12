@@ -75,6 +75,33 @@
             <p> <?php echo $result['tekst']; ?></p>
         </article>
     <?php } ?>
+    <?php foreach (database::execute("SELECT * FROM comment WHERE post_id = '$topic_id'") as $result) {
+        ?>
+        <br />
+        <div id="datum"><p>Date Post: <?php echo $result['date_comment']?></p></div>
+        <article class="content">
+            <p> <?php echo $result['comment']; ?></p>
+        </article>
+        <?php
+    }
+    if(isset($_SESSION['id'])){
+        ?>
+        <h1 class="koptekst"> Reageren?</h1>
+        <p class="description"> Volg dit vak hieronder in om een reactie achter te laten.</p>
+        <form method="post" id="reactie">
+            <textarea rows="10" cols="126" name="reactie"></textarea>
+            <br />
+            <input type="submit" value="Bevestigen" name="Bevestigen" >
+        </form>
+        <?php
+    }
+    if(isset($_POST['reactie'])){
+        $reactie = $_POST['reactie'];
+        $id = $_SESSION['id'];
+        database::execute_without_fetch("INSERT INTO comment (comment, post_id, user_id) VALUES ('$reactie','$topic_id','$id')");
+        header('Location: '. $_SERVER['HTTP_REFERER']);
+    }
+    ?>
 </main>
 </body>
 
