@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <?php
+    include "include.php";
+    $database = new database();
+    ?>
     <meta charset="UTF-8">
     <link href="css/styles.css" rel="stylesheet">
     <title>Ducati Forum</title>
@@ -30,9 +34,6 @@
 
         <?php
         }
-        // dit stukje code zorgt voor de connectie met de database
-        include "database.php";
-        $database = new database();
         //if $_SESSION doesnt exist when this is being called then create it
         if(!isset($_SESSION)){
             session_start();

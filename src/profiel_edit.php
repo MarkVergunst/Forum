@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <?php
+    include "include.php";
+    $database = new database();
+    ?>
     <meta charset="UTF-8">
     <link href="css/styles.css" rel="stylesheet">
     <title>Ducati Forum</title>
@@ -25,11 +29,7 @@
 
         </form>
         <?php
-        include "database.php";
-        $database = new database();
-
-
-        if(isset($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])){
+            if(isset($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])){
             $user = $_POST['gebruikersnaam'];
             $wachtwoord = md5($_POST['wachtwoord']);
             $result = $database->execute("Select * FROM users WHERE login_name = '$user' AND wachtwoord = '$wachtwoord'");
@@ -67,7 +67,7 @@
     <section class="content">
 
         <?php
-        $result = $database->execute("SELECT * FROM users WHERE id = '{$_SESSION['id']}'");
+
             ?>
             <form id="password_change" method="post">
                 <p> Oud wachtwoord: </p><input type="password" name="old_password"/>
@@ -77,25 +77,36 @@
                 <br />
                 <input type="submit" value="Bevestigen" name="Bevestigen" />
             </form>
+    </section>
+        <p>
         <?php
-        if(isset($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['again_password'])){
+
+        if(isset($_POST['old_password']) && isset($_POST['new_password']) && isset($_POST['again_password'])){
+            $result = $database->execute("SELECT * FROM users WHERE id = '{$_SESSION['id']}'");
             $old_pass = md5($_POST['old_password']);
-            $db_pass = $result['wachtwoord'];
+            $db_pass = $result[0]['wachtwoord'];
             $new_pass = $_POST['new_password'];
             $again_pass = $_POST['again_password'];
-            if ($old_pass == $db_pass){
-                 if ($new_pass == $again_pass) {
-                     database::execute_without_fetch("UPDATE users SET wachtwoord = '$new_pass' WHERE id =('{$_SESSION['id']}'");
-                     echo "uw wachtwoord is veranderd";
-                    }
-                    echo "uw wachtwoord komt niet overheen";
+            if ($old_pass === $db_pass){
+                 if ($new_pass === $again_pass) {
+                     if (preg_match('/[\!\@\#\$\%\^\&\*\(\)]/',$new_pass) && preg_match('/[123456789]/',$new_pass) && preg_match('/[abcdefghijklmopqrstuvwxyz]/',$new_pass) && preg_match('/[ABCDEFGHIJKLMOPQRSTUVWXYZ]/', $new_pass)) {
+                         database::execute_without_fetch("UPDATE users SET wachtwoord = md5('$new_pass') WHERE id ='{$_SESSION['id']}'");
+                         echo "uw wachtwoord is veranderd";
+                     }else{
+                         echo "u moet een moeilijker wachtwoord uit zoeken";
+                     }
+                    }else {
+                     echo "uw wachtwoord komt niet overheen";
+                 }
+            }else {
+                echo "uw oude wachtwoord klopt niet";
             }
-            echo "uw oude wachtwoord klopt niet";
         }else {
-            echo "<br /><br /><br /><br /><br /><br /><br /><br /><br />u moet alle velden invullen";
+            echo "u moet alle velden invullen";
         }
         ?>
-    </section>
+        </p>
+
 </main>
 </body>
 

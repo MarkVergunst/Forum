@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <?php
+    include "include.php";
+    $database = new database();
+    ?>
     <meta charset="UTF-8">
     <link href="css/styles.css" rel="stylesheet">
     <title>Ducati Forum</title>
@@ -25,10 +29,6 @@
 
         </form>
         <?php
-        include "database.php";
-        $database = new database();
-
-
         if(isset($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])){
             $user = $_POST['gebruikersnaam'];
             $wachtwoord = md5($_POST['wachtwoord']);

@@ -32,10 +32,8 @@
             <input type="submit" value="logout" name="logout">
         </form>
 
-            <?php
+        <?php
         }
-
-
         //if $_SESSION doesnt exist when this is being called then create it
         if(!isset($_SESSION)){
             session_start();
@@ -79,18 +77,43 @@
     </h1>
 </div>
 <main>
-    <h1 class="koptekst"> Categorieën</h1>
-    <p class="description"> klik op een categorie om naar de topic te gaan.</p>
-    <!-- dit zorgt voor het ophalen van de juiste gegevens.-->
-    <?php foreach (database::execute("Select * FROM categorie") as $result){ ?>
-        <div onclick="load_Topic(<?php echo $result['id'] ?>);" class="header">
-            <p>  <?php echo $result['titel'];?></p>
-        </div>
-        <article onclick="load_Topic();" class="content">
-            <p> <?php echo $result['description']; ?></p>
-        </article>
-    <?php } ?>
+    <h1 class="koptekst"> Topic aanmaken</h1>
+    <p class="description"> Volg het fomulier om een topic aan te maken.</p>
+    <form method="post" id="topic_aanmaken">
+        <p>Titel:</p><input type="text" name="titel" />  <br />
+        <p>Korte omschrijving:</p><input type="text" name="description" />  <br />
+        <p>Tekst:</p><textarea type="text" name="tekst" rows="4" cols="50"> </textarea>  <br />
+        <p>Categorie:</p><select name="categorie">  <br />
+        <?php
+        $categorie = database::execute('Select * FROM categorie');;
+        foreach($categorie as $result){
+        echo "<option value='{$result['id']}'>{$result['titel']}</option>";
+        }
+        ?>
+        </select>
+        <input type="submit" value="Bevestigen" name="Bevestigen" />
+    </form>
+
+    <?php
+    if(isset($_POST['titel']) && isset($_POST['description']) && isset($_POST['tekst']) && isset($_POST['categorie'])) {
+        $titel = $_POST['titel'];
+        $description = $_POST['description'];
+        $tekst = $_POST['tekst'];
+        $categorie = $_POST['categorie'];
+        $id = $_SESSION['id'];
+        $topic_id = database::execute("SELECT id FROM topic ORDER BY id DESC");
+        $topic_last_id = $topic_id[0][0] + 1;
+        database::execute_without_fetch("INSERT INTO topic (categorie_id, titel, tekst, tekst_groot) VALUES ('$categorie','$titel','$description', '$tekst') ");
+        $database->execute_without_fetch("INSERT INTO post (user_id, topic_id) VALUES ('$id', '$topic_last_id')");
+    }
+    ?>
+
 </main>
 </body>
+<?php
+echo "<pre>";
+print_r($topic_last_id);
+echo "</pre>";
+?>
 
 </html>

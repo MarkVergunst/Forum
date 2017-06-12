@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <?php
+    include "include.php";
+    $database = new database();
+    ?>
     <meta charset="UTF-8">
     <link href="css/styles.css" rel="stylesheet">
 
@@ -27,9 +31,6 @@
     </div>
     <?php
     }
-    include "database.php";
-    $database = new database();
-
     // dit stukje code zorgt voor het uitloggen
     if(isset($_POST['logout'])){
         unset($_SESSION['id']);
