@@ -53,12 +53,12 @@
     </h1>
 </div>
 <main>
-    <title class="head">
+    <div class="head">
 
-    </title>
-    <section class="content">
+    </div>
+    <article class="content">
 
-    </section>
+    </article>
 </main>
 </body>
 </html>

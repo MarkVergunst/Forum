@@ -62,6 +62,7 @@
     </h1>
 </div>
 <main>
+    <h1 class="koptekst"> Posts</h1>
     <?php
     $topic_id = $_GET['id'];
     ?>

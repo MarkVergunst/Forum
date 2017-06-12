@@ -67,6 +67,8 @@
     </h1>
 </div>
 <main>
+    <h1 class="koptekst"> Topics</h1>
+    <p class="description"> klik op een topic om naar de post te gaan.</p>
 <?php
     $categorie_id = $_GET['id'];
     foreach (database::execute("SELECT * FROM topic WHERE categorie_id = '$categorie_id'") as $result){ ?>
@@ -76,10 +78,11 @@
     <article onclick="load_Post(<?php echo $result['id'] ?>)" class="content">
        <p> <?php echo $result['tekst']; ?> </p>
     </article>
-</main>
-<?php
-}
+        <?php
+    }
 ?>
+</main>
+
 </body>
 </html>
 <script type="text/javascript" src="script.js"></script>

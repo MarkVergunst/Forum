@@ -76,6 +76,8 @@
     </h1>
 </div>
 <main>
+    <h1 class="koptekst"> Categorieën</h1>
+    <p class="description"> klik op een categorie om naar de topic te gaan.</p>
     <!-- dit zorgt voor het ophalen van de juiste gegevens.-->
     <?php foreach (database::execute("Select * FROM categorie") as $result){ ?>
         <div onclick="load_Topic(<?php echo $result['id'] ?>);" class="header">

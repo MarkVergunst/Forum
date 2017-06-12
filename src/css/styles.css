@@ -28,6 +28,12 @@ width: 1400px;
 height: 1000px;
 margin-left: 260px;
 }
+main .koptekst{
+    text-align: center;
+}
+main .description{
+    text-align: center;
+}
 #login{
     height: 100px;
     width: 400px;
