@@ -71,6 +71,11 @@
     </h1>
 </div>
 <main>
+    <?php
+    $id = $_SESSION['id'];
+    $resultaat = database::execute("SELECT * FROM users WHERE id = '$id'");
+    if($resultaat[0]['level'] > 1){
+    ?>
     <h1 class="koptekst"> Categorie aanmaken</h1>
     <p class="description"> Volg dit formulier om een Categorie aan te maken.</p>
 <form method="post" id="categorie_aanmaken">
@@ -79,10 +84,11 @@
     <input type="submit" value="Bevestigen" name="Bevestigen"/>
 </form>
     <?php
-    if(isset($_POST['titel']) && isset($_POST['description'])){
+    if(isset($_POST['titel']) && isset($_POST['description'])) {
         $titel = $_POST['titel'];
         $description = $_POST['description'];
         database::execute_without_fetch("INSERT INTO categorie (titel, description) VALUES ('$titel','$description')");
+    }
     }
     ?>
 
