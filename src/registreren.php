@@ -37,9 +37,8 @@
     </h1>
 </div>
 <main>
-    <div class="head">
-        <h1> Registreren </h1>
-    </div>
+    <h1 class="koptekst"> Registreren</h1>
+
     <section class="content">
         <form method="post">
             Gebruikersnaam:* <input type="text" class="invoer" name="gebruikersnaam"> <br/>

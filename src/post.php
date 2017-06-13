@@ -8,8 +8,7 @@
     <meta charset="UTF-8">
     <link href="css/styles.css" rel="stylesheet">
     <title>Ducati Forum</title>
-    <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript" src="ajax.js"></script>
+    <script type="text/javascript" src="javascript/script.js"></script>
 </head>
 <body>
 <header>
@@ -68,24 +67,33 @@
     <?php
     $topic_id = $_GET['id'];
     ?>
-    <?php foreach (database::execute("Select topic.id, topic.titel, topic.tekst, post.topic_id, post.date_post, post.foto  FROM topic INNER JOIN post ON topic.id = post.topic_id WHERE post.topic_id = '$topic_id' ") as $result){ ?>
-        <div id="datum"><p>Date Post: <?php echo $result['date_post']?></p></div>
+    <?php foreach (database::execute("SELECT users.Voornaam, users.Achternaam, users.id, topic.user_id FROM users INNER JOIN topic ON users.id = topic.user_id WHERE topic.id = '$topic_id'") as $resultaat): ?>
+        <div><p>Gemaakt door: <?php
+        echo $resultaat['Voornaam'] . ' ';
+        echo $resultaat['Achternaam'];?></p></div>
+    <?php endforeach;
+    foreach (database::execute("Select topic.id, topic.titel, topic.tekst, post.topic_id, post.date_post, post.foto, post.user_id  FROM topic INNER JOIN post ON topic.id = post.topic_id WHERE post.topic_id = '$topic_id' ") as $result){ ?>
+    <div id="datum"><p>Date Post: <?php $sqldate=date('d-m-Y H:i:s',strtotime($result['date_post'])); echo $sqldate;?></p></div>
         <div class="header">
-            <p>  <?php echo $result['titel'];?></p>
+            <p>  <?= $result['titel'];?></p>
         </div>
         <article class="content">
             <p> <?php echo $result['tekst']; ?></p>
         </article>
-    <?php } ?>
-    <?php foreach (database::execute("SELECT * FROM comment WHERE post_id = '$topic_id'") as $result) {
-        ?>
+    <?php  }?>
+    <?php foreach (database::execute("SELECT users.Voornaam, users.Achternaam, users.id, comment.* FROM users INNER JOIN comment ON users.id = comment.user_id  WHERE comment.post_id = $topic_id") as $result): ?>
+
         <br />
-        <div id="datum"><p>Date Post: <?php echo $result['date_comment']?></p></div>
+           <div><p>Gereageerd door: <?php
+        echo $result['Voornaam'] . ' ';
+        echo $result['Achternaam'];?></p></div>
+        <div id="datum"><p>Date Reactie: <?php $sqldate=date('d-m-Y H:i:s',strtotime($result['date_comment'])); echo $sqldate;?></p></div>
+
         <article class="content">
             <p> <?php echo $result['comment']; ?></p>
         </article>
-        <?php
-    }
+    <?php endforeach;
+
     if(isset($_SESSION['id'])){
         ?>
         <h1 class="koptekst"> Reageren?</h1>

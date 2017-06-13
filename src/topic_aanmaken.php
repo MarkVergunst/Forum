@@ -8,8 +8,7 @@
     <meta charset="UTF-8">
     <link href="css/styles.css" rel="stylesheet">
     <title>Ducati Forum</title>
-    <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript" src="ajax.js"></script>
+    <script type="text/javascript" src="javascript/script.js"></script>
 </head>
 <body>
 <header>
@@ -96,8 +95,9 @@
         $id = $_SESSION['id'];
         $topic_id = database::execute("SELECT id FROM topic ORDER BY id DESC");
         $topic_last_id = $topic_id[0][0] + 1;
-        database::execute_without_fetch("INSERT INTO topic (categorie_id, titel, tekst, tekst_groot) VALUES ('$categorie','$titel','$description', '$tekst') ");
+        database::execute_without_fetch("INSERT INTO topic (categorie_id, titel, tekst, tekst_groot, user_id) VALUES ('$categorie','$titel','$description', '$tekst', '$id') ");
         $database->execute_without_fetch("INSERT INTO post (user_id, topic_id) VALUES ('$id', '$topic_last_id')");
+        header('Location: '. $_SERVER['HTTP_REFERER']);
     }
     ?>
 

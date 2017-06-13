@@ -8,8 +8,7 @@
     <meta charset="UTF-8">
     <link href="css/styles.css" rel="stylesheet">
     <title>Ducati Forum</title>
-    <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript" src="ajax.js"></script>
+    <script type="text/javascript" src="javascript/script.js"></script>
 </head>
 <body>
 <header>

@@ -76,7 +76,6 @@
     }
 ?>
 </main>
-
+<script type="text/javascript" src="javascript/script.js"></script>
 </body>
 </html>
-<script type="text/javascript" src="script.js"></script>
