@@ -63,29 +63,37 @@
     </h1>
 </div>
 <main>
+    <?php
+    if (isset($_SESSION['id'])) {
+        ?>
         <h1 class="koptekst"> Profiel pagina</h1>
 
         <section class="content">
-<?php
-//        $result = database::execute("SELECT * FROM users WHERE id = '{$_SESSION['id']}'");
-//        echo "<pre>";
-//        print_r($result);
-//        echo "</pre>";
-//        ?>
             <?php
-        foreach (database::execute("SELECT * FROM users WHERE id = '{$_SESSION['id']}'") as $result){
-?>
-            <p> Gebruikersnaam: <?php echo $result['login_name']; ?></p>
-            <p> E-mail: <?php echo $result['email']; ?></p>
-            <p> Voornaam: <?php echo $result['Voornaam']; ?></p>
-            <p> Achternaam: <?php echo $result['Achternaam']; ?></p>
-            <p> Geboortedatum: <?php $sqldate=date('d-m-Y',strtotime($result['geboortedatum'])); echo $sqldate; ?></p>
+            //        $result = database::execute("SELECT * FROM users WHERE id = '{$_SESSION['id']}'");
+            //        echo "<pre>";
+            //        print_r($result);
+            //        echo "</pre>";
+            //
+            ?>
             <?php
-                    }
+            foreach (database::execute("SELECT * FROM users WHERE id = '{$_SESSION['id']}'") as $result) {
                 ?>
+                <p> Gebruikersnaam: <?php echo $result['login_name']; ?></p>
+                <p> E-mail: <?php echo $result['email']; ?></p>
+                <p> Voornaam: <?php echo $result['Voornaam']; ?></p>
+                <p> Achternaam: <?php echo $result['Achternaam']; ?></p>
+                <p> Geboortedatum: <?php $sqldate = date('d-m-Y', strtotime($result['geboortedatum']));
+                    echo $sqldate; ?></p>
+                <?php
+            }
+            ?>
             <button onclick="add_picture();">Foto toevoegen</button>
             <button onclick="change_Password();">Change Password</button>
         </section>
+        <?php
+    }
+    ?>
 </main>
 </body>
 <script type="text/javascript" src="javascript/script.js"></script>

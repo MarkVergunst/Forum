@@ -64,6 +64,9 @@
     </h1>
 </div>
 <main>
+    <?php
+    if (isset($_SESSION['id'])) {
+    ?>
     <h1 class="koptekst"> Profiel pagina</h1>
     <p class="description">hier kunt u een profielfoto toevoegen</p>
     <section class="content">
@@ -77,8 +80,8 @@
         $file_get = $_FILES['foto']['name'];
         $temp = $_FILES['foto']['tmp_name'];
         $id = $_SESSION['id'];
-        mkdir('pictures/'. $id);
-        $file_to_saved = "pictures/$id/".$file_get;
+        mkdir('pictures/' . $id);
+        $file_to_saved = "pictures/$id/" . $file_get;
         move_uploaded_file($temp, $file_to_saved);
 
         echo $file_to_saved;
@@ -87,9 +90,9 @@
 
             echo "<br />Img inserted successfully";
             header('Location: profiel.php');
-        }
-        else{
+        } else {
             echo "<br />There is something wrong with this code. Eff!";
+        }
         }
         ?>
 

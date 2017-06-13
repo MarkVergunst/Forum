@@ -69,24 +69,28 @@
     </h1>
 </div>
 <main>
-    <h1 class="koptekst"> Topic aanmaken</h1>
-    <p class="description"> Volg het fomulier om een topic aan te maken.</p>
-    <form method="post" id="topic_aanmaken">
-        <p>Titel:</p><input type="text" name="titel" />  <br />
-        <p>Korte omschrijving:</p><input type="text" name="description" />  <br />
-        <p>Tekst:</p><textarea type="text" name="tekst" rows="4" cols="50"> </textarea>  <br />
-        <p>Categorie:</p><select name="categorie">  <br />
-        <?php
-        $categorie = database::execute('Select * FROM categorie');;
-        foreach($categorie as $result){
-        echo "<option value='{$result['id']}'>{$result['titel']}</option>";
-        }
+    <?php if (isset($_SESSION['id'])) {
         ?>
-        </select>
-        <input type="submit" value="Bevestigen" name="Bevestigen" />
-    </form>
 
-    <?php
+        <h1 class="koptekst"> Topic aanmaken</h1>
+        <p class="description"> Volg het fomulier om een topic aan te maken.</p>
+        <form method="post" id="topic_aanmaken">
+            <p>Titel:</p><input type="text" name="titel"/> <br/>
+            <p>Korte omschrijving:</p><input type="text" name="description"/> <br/>
+            <p>Tekst:</p><textarea type="text" name="tekst" rows="4" cols="50"> </textarea> <br/>
+            <p>Categorie:</p><select name="categorie"> <br/>
+                <?php
+                $categorie = database::execute('Select * FROM categorie');;
+                foreach ($categorie as $result) {
+                    echo "<option value='{$result['id']}'>{$result['titel']}</option>";
+                }
+                ?>
+            </select>
+            <input type="submit" value="Bevestigen" name="Bevestigen"/>
+        </form>
+
+        <?php
+    }
     if(isset($_POST['titel']) && isset($_POST['description']) && isset($_POST['tekst']) && isset($_POST['categorie'])) {
         $titel = $_POST['titel'];
         $description = $_POST['description'];
