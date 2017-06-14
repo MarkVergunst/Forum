@@ -74,19 +74,38 @@
         </h1>
     </div>
     <main>
-        <h1 class="koptekst"> Categorieën</h1>
-        <p class="description"> klik op een categorie om naar de topic te gaan.</p>
-        <!-- dit zorgt voor het ophalen van de juiste gegevens.-->
-        <?php foreach (database::execute("Select * FROM categorie") as $result){ ?>
-            <div onclick="load_Topic(<?php echo $result['id'] ?>);" class="header">
-                <p>  <?php echo $result['titel'];?></p>
-            </div>
-            <article onclick="load_Topic();" class="content">
-                <p> <?php echo $result['description']; ?></p>
-            </article>
-        <?php }
-            }?>
-    </main>
-    </body>
+        <h1 class="koptekst"> Admin Tools</h1>
+        <p class="description"> Hier kunt u de rang van de members verhogen.</p>
 
+        <section class="content">
+            <form method="post" id="admin">
+                <select name="account">
+                    <?php
+                    foreach (database::execute('Select * FROM users') as $result) {
+                        echo "<option value='{$result['id']}'>{$result['login_name']}</option>";
+                    }
+                    ?>
+                </select>
+                <select name="rank">
+                    <?php
+                    foreach (database::execute('Select * FROM level') as $result) {
+                        echo "<option value='{$result['id']}'>{$result['level_naam']}</option>";
+                    }
+                    ?>
+                </select>
+                <input type="submit" name="Bevestigen" value="Bevestigen" />
+            </form>
+            <?php
+            if (isset($_POST['account']) && isset($_POST['rank'])){
+                $account = $_POST['account'];
+                $rank = $_POST['rank'];
+                database::execute_without_fetch("UPDATE users SET `level` = '$rank' WHERE id = '$account'");
+            }
+            ?>
+
+        </section>
+    </body>
+    <?php
+    }
+    ?>
     </html>
