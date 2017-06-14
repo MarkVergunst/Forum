@@ -13,3 +13,6 @@ function change_Password() {
 function add_picture() {
     window.location = "profiel_add_pic.php"
 }
+function post_aanpassen(id) {
+    window.location = "post_aanpassen.php?id="+id;
+}
