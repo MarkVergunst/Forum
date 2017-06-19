@@ -44,7 +44,7 @@
             unset($_SESSION['id']);
             header('Location: '. $_SERVER['HTTP_REFERER']);
         }
-        // dit stukje code zorgt voor het inloggen en het checken van het uniek zijn van een gebruiker
+        // dit stukje code zorgt voor het inl oggen en het checken van het uniek zijn van een gebruiker
         if(isset($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])){
             $user = $_POST['gebruikersnaam'];
             $wachtwoord = md5($_POST['wachtwoord']);

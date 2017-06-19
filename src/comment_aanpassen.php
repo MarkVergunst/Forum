@@ -1,3 +1,11 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Mark
+ * Date: 19-6-2017
+ * Time: 12:51
+ */
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +71,7 @@
     </h1>
 </div>
 <main>
-    <h1 class="koptekst"> Posts</h1>
+    <h1 class="koptekst"> Comment</h1>
     <?php
     $topic_id = $_GET['id'];
     ?>
@@ -72,39 +80,36 @@
                 echo $resultaat['Voornaam'] . ' ';
                 echo $resultaat['Achternaam'];?></p></div>
     <?php endforeach;
-    foreach (database::execute("Select topic.id, topic.titel, topic.tekst, post.topic_id, post.date_post, post.foto, post.user_id  FROM topic INNER JOIN post ON topic.id = post.topic_id WHERE post.topic_id = '$topic_id' ") as $result){ ?>
-        <div id="datum"><p>Date Post: <?php $sqldate=date('d-m-Y H:i:s',strtotime($result['date_post'])); echo $sqldate;?></p></div>
-        <div class="header">
-            <p>  <?= $result['titel'];?></p>
-        </div>
+    foreach (database::execute("SELECT users.Voornaam, users.Achternaam, users.id, comment.* FROM users INNER JOIN comment ON users.id = comment.user_id  WHERE comment.post_id = $topic_id") as $result){ ?>
+        <div id="datum"><p>Date Post: <?php $sqldate=date('d-m-Y H:i:s',strtotime($result['date_comment'])); echo $sqldate;?></p></div>
         <article class="content">
-            <p> <?php echo $result['tekst']; ?></p>
+            <p> <?php echo $result['comment']; ?></p>
         </article>
     <?php  }
     $id = $_SESSION['id'];
-    $result = $database->execute("SELECT * FROM topic WHERE user_id = '$id' AND id = '$topic_id'");
-        ?>
-        <h1 class="koptekst"> Aanpassen</h1>
-        <p class="description"> Volg dit Formulier om uw topic aan te passen.</p>
-        <form method="post" id="reactie">
-            <textarea rows="10" cols="126"  name="aanpassing"><?php echo $result[0]['tekst'] ?></textarea>
-            <br />
-            <input type="submit" value="Bevestigen" name="Bevestigen" >
-        </form>
-        <?php
-        $resultaat = $database::execute("SELECT * FROM topic WHERE user_id = '$id' AND id = '$topic_id'");
+    $result = $database->execute("SELECT * FROM comment WHERE user_id = '$id' AND post_id = '$topic_id'");
+    ?>
+    <h1 class="koptekst"> Aanpassen</h1>
+    <p class="description"> Volg dit Formulier om uw comment aan te passen.</p>
+    <form method="post" id="reactie">
+        <textarea rows="10" cols="126"  name="aanpassing"><?php echo $result[0]['comment'] ?></textarea>
+        <br />
+        <input type="submit" value="Bevestigen" name="Bevestigen" >
+    </form>
+    <?php
+    $resultaat = $database::execute("SELECT * FROM comment WHERE user_id = '$id' AND post_id = '$topic_id'");
 
-        if($_SESSION['id'] == $resultaat[0]['user_id']) {
-            // moet nog beveiliging toegevoegd worden.
-            if (isset($_POST['aanpassing'])) {
-                $tekst = $_POST['aanpassing'];
-                $topic_id = $_GET['id'];
-                $database->execute_without_fetch("UPDATE topic SET tekst  = '$tekst' WHERE id = '$topic_id'");
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
-            }
-        }else{
-            header('Location: ' . 'post.php?id='. $topic_id);
+    if($_SESSION['id'] == $resultaat[0]['user_id']) {
+        // moet nog beveiliging toegevoegd worden.
+        if (isset($_POST['aanpassing'])) {
+            $tekst = $_POST['aanpassing'];
+            $topic_id = $_GET['id'];
+            $database->execute_without_fetch("UPDATE comment SET comment  = '$tekst' WHERE post_id = '$topic_id'");
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
+    }else{
+        header('Location: ' . 'post.php?id='. $topic_id);
+    }
     ?>
 
 </main>

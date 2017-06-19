@@ -16,3 +16,6 @@ function add_picture() {
 function post_aanpassen(id) {
     window.location = "post_aanpassen.php?id="+id;
 }
+function comment_aanpassen(id) {
+    window.location = "comment_aanpassen.php?id="+id;
+}

@@ -79,9 +79,18 @@
         </div>
         <article class="content">
             <p> <?php echo $result['tekst']; ?></p>
-            <button onclick="post_aanpassen(<?php echo $topic_id; ?>)"> Aanpassen</button>
+            <?php
+        if(isset($_SESSION['id'])){
+            if ($_SESSION['id'] == $result['user_id']) {
+                ?>
+                <button onclick="post_aanpassen(<?php echo $topic_id; ?>)"> Aanpassen</button>
+                <?php
+            }
+        }
+            ?>
         </article>
-    <?php  }?>
+    <?php
+    }?>
     <?php foreach (database::execute("SELECT users.Voornaam, users.Achternaam, users.id, comment.* FROM users INNER JOIN comment ON users.id = comment.user_id  WHERE comment.post_id = $topic_id") as $result): ?>
 
         <br />
@@ -92,6 +101,15 @@
 
         <article class="content">
             <p> <?php echo $result['comment']; ?></p>
+            <?php
+            if(isset($_SESSION['id'])){
+                if ($_SESSION['id'] == $result['user_id']) {
+                    ?>
+                    <button onclick="comment_aanpassen(<?php echo $topic_id; ?>)"> Aanpassen</button>
+                    <?php
+                }
+            }
+            ?>
         </article>
     <?php endforeach;
 

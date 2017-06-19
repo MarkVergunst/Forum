@@ -89,10 +89,7 @@
     $geboortedatum = $_POST['geboortedatum'];
     $sqldate=date('Y-m-d',strtotime($geboortedatum));
            if (preg_match('/\@/', $email) && preg_match('/\./', $email)){
-        //succes
-    }else {
-        echo 'e-mail adress invalid <br />';
-    }
+
     if (preg_match('/[\!\@\#\$\%\^\&\*\(\)]/',$wachtwoord) && preg_match('/[123456789]/',$wachtwoord) && preg_match('/[abcdefghijklmopqrstuvwxyz]/',$wachtwoord) && preg_match('/[ABCDEFGHIJKLMOPQRSTUVWXYZ]/', $wachtwoord)){
       $wachtwoord = md5($wachtwoord);
       $confirmpassword = md5($confirmpassword);
@@ -110,7 +107,9 @@
     }else {
         echo "<br />mislukt";
     }
-
+    }else {
+        echo 'e-mail adress invalid <br />';
+    }
 
     ?>
 </main>
