@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/reg.css" rel="stylesheet">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <title>Ducati Forum</title>
 </head>
 <body>
@@ -48,6 +49,8 @@
             Voornaam:* <input type="text" class="invoer" name="voornaam"> <br/>
             Achternaam:* <input type="text" class="invoer" name="achternaam"> <br/>
             geboortedatum: <input type="date" id="date" class="invoer" name="geboortedatum"> <br/>
+            <!-- reCaptcha werkt alleen als je dit op een domein maakt.. localhost staat niet geregistreerd omdat google niet weet welke computer localhost is van mij.-->
+            <div class="g-recaptcha" name="recaptcha" data-sitekey="6LfzAiYUAAAAAD4hLM_ZjUBOcg4Q-nD5O4a2mpSq"></div>
             <input type="submit" id="verzenden" name="Verzenden">
         </form>
     </section>
@@ -62,7 +65,7 @@
         header('Location: '. $_SERVER['HTTP_REFERER']);
     }
     // dit stukje code zorgt voor het inloggen en het checken van het uniek zijn van een gebruiker
-    if(isset($_POST['username']) && isset($_POST['password'])){
+    if(isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['submit'])){
         $user = $_POST['username'];
         $wachtwoord = md5($_POST['password']);
         $result = $database->execute("Select * FROM users WHERE login_name = '$user' AND wachtwoord = '$wachtwoord'");
@@ -78,8 +81,10 @@
         }
     }
     // dit zorgt ervoor dat je kant registreren en dat word dan in de database gezet
-    if(isset($_POST['gebruikersnaam'])&&!empty($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])&&!empty($_POST['wachtwoord']) && isset($_POST['email'])&&!empty($_POST['email']) && isset($_POST['voornaam']) &&!empty($_POST['voornaam']) && isset($_POST['achternaam'])&&!empty($_POST['achternaam'])){
-    if($_POST['wachtwoord'] === $_POST['confirmwachtwoord']) {
+
+    if(isset($_POST['gebruikersnaam'])&&!empty($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])&&!empty($_POST['wachtwoord']) && isset($_POST['email'])&&!empty($_POST['email']) && isset($_POST['voornaam']) &&!empty($_POST['voornaam']) && isset($_POST['achternaam'])&&!empty($_POST['achternaam'] && !empty($_POST['g-recaptcha-response']))){
+
+        if($_POST['wachtwoord'] === $_POST['confirmwachtwoord']) {
     $user = $_POST['gebruikersnaam'];
     $wachtwoord = $_POST['wachtwoord'];
     $confirmpassword = $_POST['confirmwachtwoord'];
@@ -102,13 +107,13 @@
     }
     echo "<br />gelukt";
     }else{
-        echo "<br />passwords didn't match";
+        echo "<br />uw e-mail adres klopt niet";
     }
     }else {
-        echo "<br />mislukt";
+        echo "<br />de wachtwoorden komen niet overheen.";
     }
     }else {
-        echo 'e-mail adress invalid <br />';
+        echo 'u heeft niet alle velden ingevuld<br />';
     }
 
     ?>

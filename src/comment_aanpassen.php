@@ -75,36 +75,41 @@
     <?php
     $topic_id = $_GET['id'];
     ?>
-    <?php foreach (database::execute("SELECT users.Voornaam, users.Achternaam, users.id, topic.user_id FROM users INNER JOIN topic ON users.id = topic.user_id WHERE topic.id = '$topic_id'") as $resultaat): ?>
+    <?php foreach (database::execute("SELECT users.Voornaam, users.Achternaam, users.id
+FROM users INNER JOIN comment 
+ON users.id = comment.user_id WHERE comment.id = '$topic_id'") as $resultaat): ?>
         <div><p>Gemaakt door: <?php
                 echo $resultaat['Voornaam'] . ' ';
                 echo $resultaat['Achternaam'];?></p></div>
     <?php endforeach;
-    foreach (database::execute("SELECT users.Voornaam, users.Achternaam, users.id, comment.* FROM users INNER JOIN comment ON users.id = comment.user_id  WHERE comment.post_id = $topic_id") as $result){ ?>
+    foreach (database::execute("SELECT users.Voornaam, users.Achternaam, users.id, comment.* FROM users INNER JOIN comment ON users.id = comment.user_id  WHERE comment.id = $topic_id") as $result){ ?>
         <div id="datum"><p>Date Post: <?php $sqldate=date('d-m-Y H:i:s',strtotime($result['date_comment'])); echo $sqldate;?></p></div>
         <article class="content">
             <p> <?php echo $result['comment']; ?></p>
         </article>
     <?php  }
     $id = $_SESSION['id'];
-    $result = $database->execute("SELECT * FROM comment WHERE user_id = '$id' AND post_id = '$topic_id'");
+    $result = $database->execute("SELECT * FROM comment WHERE user_id = '$id' AND id = '$topic_id'");
     ?>
     <h1 class="koptekst"> Aanpassen</h1>
     <p class="description"> Volg dit Formulier om uw comment aan te passen.</p>
     <form method="post" id="reactie">
+        <input type="hidden" name="id" value="<?= $result[0]['id'] ?>">
         <textarea rows="10" cols="126"  name="aanpassing"><?php echo $result[0]['comment'] ?></textarea>
         <br />
         <input type="submit" value="Bevestigen" name="Bevestigen" >
     </form>
     <?php
-    $resultaat = $database::execute("SELECT * FROM comment WHERE user_id = '$id' AND post_id = '$topic_id'");
+
+//    print_r($result);
+    $resultaat = $database::execute("SELECT * FROM comment WHERE user_id = '$id' AND id = '$topic_id'");
 
     if($_SESSION['id'] == $resultaat[0]['user_id']) {
         // moet nog beveiliging toegevoegd worden.
         if (isset($_POST['aanpassing'])) {
             $tekst = $_POST['aanpassing'];
-            $topic_id = $_GET['id'];
-            $database->execute_without_fetch("UPDATE comment SET comment  = '$tekst' WHERE post_id = '$topic_id'");
+            $comment_id = $_POST['id'];
+            $database->execute_without_fetch("UPDATE comment SET comment  = '$tekst' WHERE id = '$comment_id'");
             header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
     }else{

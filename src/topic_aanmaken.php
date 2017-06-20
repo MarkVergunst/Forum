@@ -108,9 +108,9 @@
 </main>
 </body>
 <?php
-echo "<pre>";
-print_r($topic_last_id);
-echo "</pre>";
-?>
+//echo "<pre>";
+//print_r($topic_last_id);
+//echo "</pre>";
+//?>
 
 </html>

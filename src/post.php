@@ -91,7 +91,7 @@
         </article>
     <?php
     }?>
-    <?php foreach (database::execute("SELECT users.Voornaam, users.Achternaam, users.id, comment.* FROM users INNER JOIN comment ON users.id = comment.user_id  WHERE comment.post_id = $topic_id") as $result): ?>
+    <?php foreach (database::execute("SELECT users.Voornaam, users.Achternaam, users.id as usid, comment.* FROM users INNER JOIN comment ON users.id = comment.user_id  WHERE comment.post_id = $topic_id") as $result): ?>
 
         <br />
            <div><p>Gereageerd door: <?php
@@ -105,7 +105,7 @@
             if(isset($_SESSION['id'])){
                 if ($_SESSION['id'] == $result['user_id']) {
                     ?>
-                    <button onclick="comment_aanpassen(<?php echo $topic_id; ?>)"> Aanpassen</button>
+                    <button onclick="comment_aanpassen(<?php echo $result['id']; ?>)"> Aanpassen</button>
                     <?php
                 }
             }
