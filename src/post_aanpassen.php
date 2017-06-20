@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php
-    include "include.php";
+    include "database.php";
     $database = new database();
     ?>
     <meta charset="UTF-8">
@@ -32,28 +32,8 @@
         </form>
         <?php
         }
-        // dit stukje code zorgt voor het uitloggen
-        if(isset($_POST['logout'])) {
-            unset($_SESSION['id']);
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-        }
-        // dit stukje maakt het inloggen mogelijk
-        if(isset($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])){
-            $user = $_POST['gebruikersnaam'];
-            $wachtwoord = md5($_POST['wachtwoord']);
-            $result = $database->execute("Select * FROM users WHERE login_name = '$user' AND wachtwoord = '$wachtwoord'");
-            if(count($result)== 1) {
-                $_SESSION["id"] = $result[0]['id'];
-
-                $user = database::user($_SESSION['id']);
-
-                echo "<br />login Succes";
-                header('Location: '. $_SERVER['HTTP_REFERER']);
-
-            }else{
-                echo "<br />login failed";
-            }
-        }
+        include_once "include/loguit.php";
+        include_once "include/login.php";
         ?>
     </div>
 </aside>

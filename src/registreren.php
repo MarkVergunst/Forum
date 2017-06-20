@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php
-    include "include.php";
+    include "database.php";
     $database = new database();
     ?>
     <meta charset="UTF-8">
@@ -28,7 +28,10 @@
             <!-- hier word bekeken of er al een sessie bestaat zo niet laat hij de loguit knop niet zien. -->
             <?php if(isset($_SESSION['id'])) { ?>
             <input type="submit" value="logout" name="logout">
-            <?php } ?>
+            <?php }
+            include_once "include/loguit.php";
+            include_once "include/login.php";
+            ?>
         </form>
     </div>
 </aside>
@@ -55,67 +58,7 @@
         </form>
     </section>
     <?php
-    //if $_SESSION doesnt exist when this is being called then create it
-    if(!isset($_SESSION)){
-        session_start();
-    }
-    // dit stukje code zorgt voor het uitloggen
-    if(isset($_POST['logout'])){
-        unset($_SESSION['id']);
-        header('Location: '. $_SERVER['HTTP_REFERER']);
-    }
-    // dit stukje code zorgt voor het inloggen en het checken van het uniek zijn van een gebruiker
-    if(isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['submit'])){
-        $user = $_POST['username'];
-        $wachtwoord = md5($_POST['password']);
-        $result = $database->execute("Select * FROM users WHERE login_name = '$user' AND wachtwoord = '$wachtwoord'");
-        if(count($result)== 1) {
-            $_SESSION["id"] = $result[0]['id'];
-            $user = database::user($_SESSION['id']);
-
-            echo "<br />login Succes";
-            header('Location: '. $_SERVER['HTTP_REFERER']);
-
-        }else{
-            echo "<br />login failed";
-        }
-    }
-    // dit zorgt ervoor dat je kant registreren en dat word dan in de database gezet
-
-    if(isset($_POST['gebruikersnaam'])&&!empty($_POST['gebruikersnaam']) && isset($_POST['wachtwoord'])&&!empty($_POST['wachtwoord']) && isset($_POST['email'])&&!empty($_POST['email']) && isset($_POST['voornaam']) &&!empty($_POST['voornaam']) && isset($_POST['achternaam'])&&!empty($_POST['achternaam'] && !empty($_POST['g-recaptcha-response']))){
-
-        if($_POST['wachtwoord'] === $_POST['confirmwachtwoord']) {
-    $user = $_POST['gebruikersnaam'];
-    $wachtwoord = $_POST['wachtwoord'];
-    $confirmpassword = $_POST['confirmwachtwoord'];
-    $email = $_POST['email'];
-    $voornaam = $_POST['voornaam'];
-    $achternaam = $_POST['achternaam'];
-    $geboortedatum = $_POST['geboortedatum'];
-    $sqldate=date('Y-m-d',strtotime($geboortedatum));
-           if (preg_match('/\@/', $email) && preg_match('/\./', $email)){
-
-    if (preg_match('/[\!\@\#\$\%\^\&\*\(\)]/',$wachtwoord) && preg_match('/[123456789]/',$wachtwoord) && preg_match('/[abcdefghijklmopqrstuvwxyz]/',$wachtwoord) && preg_match('/[ABCDEFGHIJKLMOPQRSTUVWXYZ]/', $wachtwoord)){
-      $wachtwoord = md5($wachtwoord);
-      $confirmpassword = md5($confirmpassword);
-               $result = $database->execute_without_fetch("INSERT INTO users
-    (login_name, wachtwoord, email, voornaam, achternaam, geboortedatum)
-    values
-    ('$user', '$wachtwoord', '$email', '$voornaam', '$achternaam', '$sqldate')");
-    }else{
-        echo 'error mismatch password';
-    }
-    echo "<br />gelukt";
-    }else{
-        echo "<br />uw e-mail adres klopt niet";
-    }
-    }else {
-        echo "<br />de wachtwoorden komen niet overheen.";
-    }
-    }else {
-        echo 'u heeft niet alle velden ingevuld<br />';
-    }
-
+    include_once "include/registreren.php";
     ?>
 </main>
 </body>
